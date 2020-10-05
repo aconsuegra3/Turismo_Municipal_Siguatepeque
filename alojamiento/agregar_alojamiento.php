@@ -1,3 +1,148 @@
+<?php
+
+// Defino los campos enviados desde el post para poder utilizarlos en la programación
+// $txtId=(isset($_POST['txtId']))?$_POST['txtId']:"";
+$txtNombre = (isset($_POST['txtNombre'])) ? $_POST['txtNombre'] : "";
+$txtDireccion = (isset($_POST['txtDireccion'])) ? $_POST['txtDireccion'] : "";
+$txtTelefono = (isset($_POST['txtTelefono'])) ? $_POST['txtTelefono'] : "";
+$txtCorreo = (isset($_POST['txtCorreo'])) ? $_POST['txtCorreo'] : "";
+$txtPaginaWeb = (isset($_POST['txtPaginaWeb'])) ? $_POST['txtPaginaWeb'] : "";
+$txtHorario = (isset($_POST['txtHorario'])) ? $_POST['txtHorario'] : "";
+
+$tipoAlojamiento = (isset($_POST['tipoAlojamiento'])) ? $_POST['tipoAlojamiento'] : "";
+
+$txtSencilla = (isset($_POST['txtSencilla'])) ? $_POST['txtSencilla'] : "";
+$txtDoble = (isset($_POST['txtDoble'])) ? $_POST['txtDoble'] : "";
+$txtTriple = (isset($_POST['txtTriple'])) ? $_POST['txtTriple'] : "";
+$txtCuadruple = (isset($_POST['txtCuadruple'])) ? $_POST['txtCuadruple'] : "";
+$txtSuite = (isset($_POST['txtSuite'])) ? $_POST['txtSuite'] : "";
+$txtSuitePresidencial = (isset($_POST['txtSuitePresidencial'])) ? $_POST['txtSuitePresidencial'] : "";
+$txtNumeroCamas = (isset($_POST['txtNumeroCamas'])) ? $_POST['txtNumeroCamas'] : "";
+$txtNumeroHabitaciones = (isset($_POST['txtNumeroHabitaciones'])) ? $_POST['txtNumeroHabitaciones'] : "";
+
+$checkTelefono = (isset($_POST['checkTelefono'])) ? $_POST['checkTelefono'] : 0;
+$checkTelevision = (isset($_POST['checkTelevision'])) ? $_POST['checkTelevision'] : 0;
+$checkWifi = (isset($_POST['checkWifi'])) ? $_POST['checkWifi'] : 0;
+$checkPos = (isset($_POST['checkPos'])) ? $_POST['checkPos'] : 0;
+$checkAguaCaliente = (isset($_POST['checkAguaCaliente'])) ? $_POST['checkAguaCaliente'] : 0;
+$checkAireAcondicionado = (isset($_POST['checkAireAcondicionado'])) ? $_POST['checkAireAcondicionado'] : 0;
+$checkCafeteria = (isset($_POST['checkCafeteria'])) ? $_POST['checkCafeteria'] : 0;
+$checkVentilador = (isset($_POST['checkVentilador'])) ? $_POST['checkVentilador'] : 0;
+$checkEstacionamiento = (isset($_POST['checkEstacionamiento'])) ? $_POST['checkEstacionamiento'] : 0;
+$checkLavanderia = (isset($_POST['checkLavanderia'])) ? $_POST['checkLavanderia'] : 0;
+
+$txtOtro = (isset($_POST['txtOtro'])) ? $_POST['txtOtro'] : "";
+$desayunoIncluido = (isset($_POST['desayunoIncluido'])) ? $_POST['desayunoIncluido'] : "";
+$txtSalonEventos = (isset($_POST['txtSalonEventos'])) ? $_POST['txtSalonEventos'] : "";
+
+$checkLocales = (isset($_POST['checkLocales'])) ? $_POST['checkLocales'] : 0;
+$checkNacionales = (isset($_POST['checkNacionales'])) ? $_POST['checkNacionales'] : 0;
+$checkExtranjeros = (isset($_POST['checkExtranjeros'])) ? $_POST['checkExtranjeros'] : 0;
+
+// Detecta la acción del botón a clickear
+$accion = (isset($_POST['accion'])) ? $_POST['accion'] : "";
+
+// Crear la conexion con la base de datos
+include("../conexion/conexion.php");
+
+// Verificar qué botón presionó el usuario
+switch ($accion) {
+    case "btnAgregar":
+        // Creando la sentencia SQL para insertar los valores en la BD
+        // Utilizo pdo para preparar la sentencia
+        $sentencia = $pdo->prepare("INSERT INTO hoteles(nombre, fecha_registro, direccion, telefono, correo, pag_web, horario, tipo_alojamiento, numero_camas, numero_habitaciones, desayuno_incluido, capacidad_salon_eventos, activo)
+         values (:nombre, :fecha_registro, :direccion, :telefono, :correo, :pag_web, :horario, :tipo_alojamiento, :numero_camas, :numero_habitaciones, :desayuno_incluido, :capacidad_salon_eventos, 1)");
+
+        $fechaActual = date('d-m-Y');
+        // bindParam será para asignar los valores referenciados anteriormente
+        $sentencia->bindParam(':nombre', $txtNombre);
+        $sentencia->bindParam(':fecha_registro', $fechaActual);
+        $sentencia->bindParam(':direccion', $txtDireccion);
+        $sentencia->bindParam(':telefono', $txtTelefono);
+        $sentencia->bindParam(':correo', $txtCorreo);
+        $sentencia->bindParam(':pag_web', $txtPaginaWeb);
+        $sentencia->bindParam(':horario', $txtHorario);
+
+        $sentencia->bindParam(':tipo_alojamiento', $tipoAlojamiento);
+
+        $sentencia->bindParam(':numero_camas', $txtNumeroCamas);
+        $sentencia->bindParam(':numero_habitaciones', $txtNumeroHabitaciones);
+
+        $sentencia->bindParam(':desayuno_incluido', $desayunoIncluido);
+
+        $sentencia->bindParam(':capacidad_salon_eventos', $txtSalonEventos);
+
+        // Ejecutar la instrucción de la sentencia
+        $sentencia->execute();
+
+        // Sentencia de consulta para seleccionar el hotel insertado para poder sacar el id
+        $sentenciaIdHotel = $pdo->prepare("SELECT * FROM hoteles ORDER BY id DESC LIMIT 1");
+        $sentenciaIdHotel->execute();
+        $hotel = $sentenciaIdHotel->fetch(PDO::FETCH_ASSOC);
+
+        $hotelId = $hotel['id'];
+        print $hotel['id'];
+        print $hotelId;
+
+        // Sentencia para insertar en la tabla de tarifas según el id_hotel al que pertenece
+        $sentenciaTarifas = $pdo->prepare("INSERT INTO tarifas_hotel(sencilla, doble, triple, cuadruple, suite, suite_presidencial, id_hotel)
+         values (:sencilla, :doble, :triple, :cuadruple, :suite, :suite_presidencial, :id_hotel)");
+
+        // bindParam será para asignar los valores referenciados anteriormente
+        $sentenciaTarifas->bindParam(':sencilla', $txtSencilla);
+        $sentenciaTarifas->bindParam(':doble', $txtDoble);
+        $sentenciaTarifas->bindParam(':triple', $txtTriple);
+        $sentenciaTarifas->bindParam(':cuadruple', $txtCuadruple);
+        $sentenciaTarifas->bindParam(':suite', $txtSuite);
+        $sentenciaTarifas->bindParam(':suite_presidencial', $txtSuitePresidencial);
+        $sentenciaTarifas->bindParam(':id_hotel', $hotelId);
+
+        $sentenciaTarifas->execute();
+
+        // Sentencia para insertar en la tabla de servicios según el hotel al que pertenece
+        $sentenciaServicios = $pdo->prepare("INSERT INTO servicios_hotel(telefono, television, wifi, pos, agua_caliente, aire_acondicionado, cafeteria, ventilador, estacionamiento, lavanderia, Otro, id_hotel)
+         values (:telefono, :television, :wifi, :pos, :agua_caliente, :aire_acondicionado, :cafeteria, :ventilador, :estacionamiento, :lavanderia, :Otro, :id_hotel)");
+
+        // bindParam será para asignar los valores referenciados anteriormente
+        $sentenciaServicios->bindParam(':telefono', $checkTelefono);
+        $sentenciaServicios->bindParam(':television', $checkTelevision);
+        $sentenciaServicios->bindParam(':wifi', $checkWifi);
+        $sentenciaServicios->bindParam(':pos', $checkPos);
+        $sentenciaServicios->bindParam(':agua_caliente', $checkAguaCaliente);
+        $sentenciaServicios->bindParam(':aire_acondicionado', $checkAireAcondicionado);
+        $sentenciaServicios->bindParam(':cafeteria', $checkCafeteria);
+        $sentenciaServicios->bindParam(':ventilador', $checkVentilador);
+        $sentenciaServicios->bindParam(':estacionamiento', $checkEstacionamiento);
+        $sentenciaServicios->bindParam(':lavanderia', $checkLavanderia);
+        $sentenciaServicios->bindParam(':Otro', $txtOtro);
+        $sentenciaServicios->bindParam(':id_hotel', $hotelId);
+
+        $sentenciaServicios->execute();
+
+        $sentenciaEstanciaHuespedes = $pdo->prepare("INSERT INTO estancia_huespedes_hotel(locales, nacionales, extranjeros, id_hotel)
+         values (:locales, :nacionales, :extranjeros, :id_hotel)");
+
+        // bindParam será para asignar los valores referenciados anteriormente
+        $sentenciaEstanciaHuespedes->bindParam(':locales', $checkLocales);
+        $sentenciaEstanciaHuespedes->bindParam(':nacionales', $checkNacionales);
+        $sentenciaEstanciaHuespedes->bindParam(':extranjeros', $checkExtranjeros);
+        $sentenciaEstanciaHuespedes->bindParam(':id_hotel', $hotelId);
+
+        $sentenciaEstanciaHuespedes->execute();
+
+        if ($sentencia && $sentenciaEstanciaHuespedes && $sentenciaServicios && $sentenciaTarifas) {
+            echo '<script language="javascript">alert("Registro agregado exitosamente");window.location.href="alojamiento.php"</script>';
+        }
+        // // Header sirve para redireccionar a la direccion que se desee
+        // header('location: alojamiento.php');
+
+        break;
+    case "btnCancelar":
+        break;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -38,11 +183,11 @@
         </div>
     </nav>
 
-    <div class="container mt-3">        
+    <div class="container mt-3">
         <form class="form-group" action="" method="post" enctype="multipart/form-data">
 
             <h3 class="mt-4 text-center">INGRESO DE EMPRESAS DE SERVICIO DE ALOJAMIENTO</h3>
-            <h4 class="mt-4 mb-4">Información general</h4>            
+            <h4 class="mt-4 mb-4">Información general</h4>
 
             <div class="row">
 
@@ -219,7 +364,7 @@
                     <input class="form-check-input" type="checkbox" id="checkExtranjeros" name="checkExtranjeros" value="1">
                     <label class="form-check-label" for="Extranjeros">Extranjeros</label><br>
                 </div>
-            </div>            
+            </div>
 
             <div class="text-center">
                 <button class="btn btn-success" value="btnAgregar" type="submit" name="accion">Agregar</button>
