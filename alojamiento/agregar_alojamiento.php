@@ -76,8 +76,8 @@ switch ($accion) {
         $sentencia->execute();
 
         // Sentencia de consulta para seleccionar el hotel insertado para poder sacar el id
-        $sentenciaIdHotel = $pdo->prepare("SELECT * FROM hoteles ORDER BY id DESC LIMIT 1");
-        $sentenciaIdHotel->execute();
+        $sentenciaIdHotel = $pdo->prepare("SELECT * FROM hoteles ORDER BY id DESC LIMIT 1");    
+        $sentenciaIdHotel->execute();        
         $hotel = $sentenciaIdHotel->fetch(PDO::FETCH_ASSOC);
 
         $hotelId = $hotel['id'];
@@ -88,7 +88,7 @@ switch ($accion) {
         $sentenciaTarifas = $pdo->prepare("INSERT INTO tarifas_hotel(sencilla, doble, triple, cuadruple, suite, suite_presidencial, id_hotel)
          values (:sencilla, :doble, :triple, :cuadruple, :suite, :suite_presidencial, :id_hotel)");
 
-        // bindParam será para asignar los valores referenciados anteriormente
+         // bindParam será para asignar los valores referenciados anteriormente
         $sentenciaTarifas->bindParam(':sencilla', $txtSencilla);
         $sentenciaTarifas->bindParam(':doble', $txtDoble);
         $sentenciaTarifas->bindParam(':triple', $txtTriple);
@@ -103,7 +103,7 @@ switch ($accion) {
         $sentenciaServicios = $pdo->prepare("INSERT INTO servicios_hotel(telefono, television, wifi, pos, agua_caliente, aire_acondicionado, cafeteria, ventilador, estacionamiento, lavanderia, Otro, id_hotel)
          values (:telefono, :television, :wifi, :pos, :agua_caliente, :aire_acondicionado, :cafeteria, :ventilador, :estacionamiento, :lavanderia, :Otro, :id_hotel)");
 
-        // bindParam será para asignar los valores referenciados anteriormente
+         // bindParam será para asignar los valores referenciados anteriormente
         $sentenciaServicios->bindParam(':telefono', $checkTelefono);
         $sentenciaServicios->bindParam(':television', $checkTelevision);
         $sentenciaServicios->bindParam(':wifi', $checkWifi);
@@ -122,26 +122,27 @@ switch ($accion) {
         $sentenciaEstanciaHuespedes = $pdo->prepare("INSERT INTO estancia_huespedes_hotel(locales, nacionales, extranjeros, id_hotel)
          values (:locales, :nacionales, :extranjeros, :id_hotel)");
 
-        // bindParam será para asignar los valores referenciados anteriormente
+         // bindParam será para asignar los valores referenciados anteriormente
         $sentenciaEstanciaHuespedes->bindParam(':locales', $checkLocales);
         $sentenciaEstanciaHuespedes->bindParam(':nacionales', $checkNacionales);
-        $sentenciaEstanciaHuespedes->bindParam(':extranjeros', $checkExtranjeros);
+        $sentenciaEstanciaHuespedes->bindParam(':extranjeros', $checkExtranjeros);        
         $sentenciaEstanciaHuespedes->bindParam(':id_hotel', $hotelId);
 
         $sentenciaEstanciaHuespedes->execute();
 
-        if ($sentencia && $sentenciaEstanciaHuespedes && $sentenciaServicios && $sentenciaTarifas) {
+        if($sentencia && $sentenciaEstanciaHuespedes && $sentenciaServicios && $sentenciaTarifas){
             echo '<script language="javascript">alert("Registro agregado exitosamente");window.location.href="alojamiento.php"</script>';
         }
         // // Header sirve para redireccionar a la direccion que se desee
         // header('location: alojamiento.php');
-
+        
         break;
-    case "btnCancelar":
+    case "btnCancelar":                
         break;
 }
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -153,6 +154,9 @@ switch ($accion) {
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
+    <link rel="icon" href="../img/logo_muni.png">
+    <link rel="stylesheet" href="../css/estilos.css">    
+        
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
@@ -162,9 +166,10 @@ switch ($accion) {
 
 <body class="d-flex flex-column h-100 ">
 
-    <nav class="navbar bg-dark navbar-dark">
+    <nav class="navbar navbar-dark">
         <a title="Atrás" href="alojamiento.php"><i class="fas fa-arrow-left text-light" style="font-size: 25px;"></i></a>
         <a title="Inicio" class="mr-auto ml-4" href="../index.php"><i class="fas fa-home text-light" style="font-size: 25px;"></i></a>
+        <img class="mr-auto" src="../img/logo_muni.png" width="50px" alt="">
         <button title="Menú" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -183,40 +188,40 @@ switch ($accion) {
         </div>
     </nav>
 
-    <div class="container mt-3">
+    <div class="container mt-3">        
         <form class="form-group" action="" method="post" enctype="multipart/form-data">
 
             <h3 class="mt-4 text-center">INGRESO DE EMPRESAS DE SERVICIO DE ALOJAMIENTO</h3>
-            <h4 class="mt-4 mb-4">Información general</h4>
+            <h4 class="mt-4 mb-4">Información general</h4>            
 
             <div class="row">
 
                 <div class="col-lg-6">
                     <label for="">Nombre: </label>
-                    <input class="form-control " type="text" name="txtNombre" value="" placeholder="" id="txtNombre" require="" required>
+                    <input class="form-control " maxlength="255" type="text" name="txtNombre" value="" placeholder="" id="txtNombre" require="" required>
                 </div>
                 <br>
 
                 <div class="col-lg-6">
                     <label for="">Dirección: </label>
-                    <input class="form-control" type="text" name="txtDireccion" value="" placeholder="" id="txtDireccion" require="" required>
+                    <input class="form-control" maxlength="1000" type="text" name="txtDireccion" value="" placeholder="" id="txtDireccion" require="" required>
                 </div>
             </div>
             <br>
             <div class="row">
                 <div class="col-lg-3">
                     <label for="">Teléfono: </label>
-                    <input class="form-control" type="text" name="txtTelefono" value="" placeholder="" id="txtTelefono" require="" required>
+                    <input class="form-control" maxlength="15" type="text" name="txtTelefono" value="" placeholder="" id="txtTelefono" require="" required>
                     <br>
                 </div>
 
                 <div class="col-lg-4">
                     <label for="">Correo electrónico: </label>
-                    <input class="form-control" type="text" name="txtCorreo" value="" placeholder="" id="txtCorreo" require="">
+                    <input class="form-control" maxlength="100" type="text" name="txtCorreo" value="" placeholder="" id="txtCorreo" require="">
                 </div>
                 <div class="col-lg-5">
                     <label for="">Página Web o Facebook: </label>
-                    <input class="form-control" type="text" name="txtPaginaWeb" value="" placeholder="" id="txtPaginaWeb" require="">
+                    <input class="form-control" maxlength="1000" type="text" name="txtPaginaWeb" value="" placeholder="" id="txtPaginaWeb" require="">
                 </div>
             </div>
             <br>
@@ -224,7 +229,7 @@ switch ($accion) {
             <div class="row">
                 <div class="col-lg-6">
                     <label for="">Horarios de servicio: </label>
-                    <input class="form-control" type="text" name="txtHorario" value="" placeholder="" id="txtHorario" require="" required>
+                    <input class="form-control" maxlength="255" type="text" name="txtHorario" value="" placeholder="" id="txtHorario" require="" required>
                     <br>
                 </div>
 
@@ -250,30 +255,30 @@ switch ($accion) {
             <div class="row">
                 <div class="col-lg-4">
                     <label for="">Sencilla: </label>
-                    <input class="form-control" type="number" min="0" name="txtSencilla" value="" placeholder="" id="txtSencilla" require="">
+                    <input class="form-control" max="50000" type="number" min="0" name="txtSencilla" value="" placeholder="" id="txtSencilla" require="">
                 </div>
                 <div class="col-lg-4">
                     <label for="">Doble: </label>
-                    <input class="form-control" type="number" min="0" name="txtDoble" value="" placeholder="" id="txtDoble" require="">
+                    <input class="form-control" max="50000" type="number" min="0" name="txtDoble" value="" placeholder="" id="txtDoble" require="">
                 </div>
                 <div class="col-lg-4">
                     <label for="">Triple: </label>
-                    <input class="form-control" type="number" min="0" name="txtTriple" value="" placeholder="" id="txtTriple" require="">
+                    <input class="form-control" max="50000" type="number" min="0" name="txtTriple" value="" placeholder="" id="txtTriple" require="">
                 </div>
             </div>
 
             <div class="row mt-3">
                 <div class="col-lg-4">
                     <label for="">Cuádruple: </label>
-                    <input class="form-control" type="number" min="0" name="txtCuadruple" value="" placeholder="" id="txtCuadruple" require="">
+                    <input class="form-control" max="50000" type="number" min="0" name="txtCuadruple" value="" placeholder="" id="txtCuadruple" require="">
                 </div>
                 <div class="col-lg-4">
                     <label for="">Suite: </label>
-                    <input class="form-control" type="number" min="0" name="txtSuite" value="" placeholder="" id="txtSuite" require="">
+                    <input class="form-control" max="50000" type="number" min="0" name="txtSuite" value="" placeholder="" id="txtSuite" require="">
                 </div>
                 <div class="col-lg-4">
                     <label for="">Suite Presidencial: </label>
-                    <input class="form-control" type="number" min="0" name="txtSuitePresidencial" value="" placeholder="" id="txtSuitePresidencial" require="">
+                    <input class="form-control" max="50000" type="number" min="0" name="txtSuitePresidencial" value="" placeholder="" id="txtSuitePresidencial" require="">
                 </div>
 
             </div>
@@ -282,12 +287,12 @@ switch ($accion) {
             <div class="row">
                 <div class="col-lg-6">
                     <label for="">Numero de camas: </label>
-                    <input class="form-control" type="number" min="0" name="txtNumeroCamas" value="" placeholder="" id="txtNumeroCamas" require="">
+                    <input class="form-control" max="5000" type="number" min="0" name="txtNumeroCamas" value="" placeholder="" id="txtNumeroCamas" require="">
                     <br>
                 </div>
                 <div class="col-lg-6">
                     <label for="">Numero de habitaciones: </label>
-                    <input class="form-control" type="number" min="0" name="txtNumeroHabitaciones" value="" placeholder="" id="txtNumeroHabitaciones" require="">
+                    <input class="form-control" max="5000" type="number" min="0" name="txtNumeroHabitaciones" value="" placeholder="" id="txtNumeroHabitaciones" require="">
 
                 </div>
             </div>
@@ -343,7 +348,7 @@ switch ($accion) {
 
                 <div class="col-lg-3">
                     <label for="">Capacidad del salón de eventos: </label>
-                    <input class="form-control" type="number" min="0" name="txtSalonEventos" value="" placeholder="" id="txtSalonEventos" require="">
+                    <input class="form-control" max="5000" type="number" min="0" name="txtSalonEventos" value="" placeholder="" id="txtSalonEventos" require="">
 
                 </div>
 
@@ -364,7 +369,7 @@ switch ($accion) {
                     <input class="form-check-input" type="checkbox" id="checkExtranjeros" name="checkExtranjeros" value="1">
                     <label class="form-check-label" for="Extranjeros">Extranjeros</label><br>
                 </div>
-            </div>
+            </div>            
 
             <div class="text-center">
                 <button class="btn btn-success" value="btnAgregar" type="submit" name="accion">Agregar</button>
