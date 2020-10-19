@@ -9,7 +9,15 @@ $txtCorreo = (isset($_POST['txtCorreo'])) ? $_POST['txtCorreo'] : "";
 $txtPaginaWeb = (isset($_POST['txtPaginaWeb'])) ? $_POST['txtPaginaWeb'] : "";
 $txtHorario = (isset($_POST['txtHorario'])) ? $_POST['txtHorario'] : "";
 
-$tipoAlojamiento = (isset($_POST['tipoAlojamiento'])) ? $_POST['tipoAlojamiento'] : "";
+// Alojamiento
+$checkHotel = (isset($_POST['checkHotel'])) ? $_POST['checkHotel'] : 0;
+$checkAparthotel = (isset($_POST['checkAparthotel'])) ? $_POST['checkAparthotel'] : 0;
+$checkHospedaje = (isset($_POST['checkHospedaje'])) ? $_POST['checkHospedaje'] : 0;
+$checkCampamento = (isset($_POST['checkCampamento'])) ? $_POST['checkCampamento'] : 0;
+$checkCasaHuespedes = (isset($_POST['checkCasaHuespedes'])) ? $_POST['checkCasaHuespedes'] : 0;
+$checkMotel = (isset($_POST['checkMotel'])) ? $_POST['checkMotel'] : 0;
+$checkVillas_Cabanas = (isset($_POST['checkVillas_Cabanas'])) ? $_POST['checkVillas_Cabanas'] : 0;
+$txtOtroAlojamiento = (isset($_POST['txtOtroAlojamiento'])) ? $_POST['txtOtroAlojamiento'] : "";
 
 $txtSencilla = (isset($_POST['txtSencilla'])) ? $_POST['txtSencilla'] : "";
 $txtDoble = (isset($_POST['txtDoble'])) ? $_POST['txtDoble'] : "";
@@ -30,6 +38,8 @@ $checkCafeteria = (isset($_POST['checkCafeteria'])) ? $_POST['checkCafeteria'] :
 $checkVentilador = (isset($_POST['checkVentilador'])) ? $_POST['checkVentilador'] : 0;
 $checkEstacionamiento = (isset($_POST['checkEstacionamiento'])) ? $_POST['checkEstacionamiento'] : 0;
 $checkLavanderia = (isset($_POST['checkLavanderia'])) ? $_POST['checkLavanderia'] : 0;
+$checkPiscina = (isset($_POST['checkPiscina'])) ? $_POST['checkPiscina'] : 0;
+$checkServicioHabitacion = (isset($_POST['checkServicioHabitacion'])) ? $_POST['checkServicioHabitacion'] : 0;
 
 $txtOtro = (isset($_POST['txtOtro'])) ? $_POST['txtOtro'] : "";
 $desayunoIncluido = (isset($_POST['desayunoIncluido'])) ? $_POST['desayunoIncluido'] : "";
@@ -50,8 +60,8 @@ switch ($accion) {
     case "btnAgregar":
         // Creando la sentencia SQL para insertar los valores en la BD
         // Utilizo pdo para preparar la sentencia
-        $sentencia = $pdo->prepare("INSERT INTO hoteles(nombre, fecha_registro, direccion, telefono, correo, pag_web, horario, tipo_alojamiento, numero_camas, numero_habitaciones, desayuno_incluido, capacidad_salon_eventos, activo)
-         values (:nombre, :fecha_registro, :direccion, :telefono, :correo, :pag_web, :horario, :tipo_alojamiento, :numero_camas, :numero_habitaciones, :desayuno_incluido, :capacidad_salon_eventos, 1)");
+        $sentencia = $pdo->prepare("INSERT INTO hoteles(nombre, fecha_registro, direccion, telefono, correo, pag_web, horario, numero_camas, numero_habitaciones, desayuno_incluido, capacidad_salon_eventos, activo)
+         values (:nombre, :fecha_registro, :direccion, :telefono, :correo, :pag_web, :horario, :numero_camas, :numero_habitaciones, :desayuno_incluido, :capacidad_salon_eventos, 1)");
 
         $fechaActual = date('d-m-Y');
         // bindParam será para asignar los valores referenciados anteriormente
@@ -61,9 +71,7 @@ switch ($accion) {
         $sentencia->bindParam(':telefono', $txtTelefono);
         $sentencia->bindParam(':correo', $txtCorreo);
         $sentencia->bindParam(':pag_web', $txtPaginaWeb);
-        $sentencia->bindParam(':horario', $txtHorario);
-
-        $sentencia->bindParam(':tipo_alojamiento', $tipoAlojamiento);
+        $sentencia->bindParam(':horario', $txtHorario);       
 
         $sentencia->bindParam(':numero_camas', $txtNumeroCamas);
         $sentencia->bindParam(':numero_habitaciones', $txtNumeroHabitaciones);
@@ -80,9 +88,24 @@ switch ($accion) {
         $sentenciaIdHotel->execute();        
         $hotel = $sentenciaIdHotel->fetch(PDO::FETCH_ASSOC);
 
-        $hotelId = $hotel['id'];
-        print $hotel['id'];
-        print $hotelId;
+        $hotelId = $hotel['id'];       
+
+        // Sentencia de tipo_alojamiento
+        $sentenciaTipoAlojamiento = $pdo->prepare("INSERT INTO tipo_alojamiento(hotel, aparthotel, hospedaje, campamento, casa_huespedes, motel, villas_cabanas, Otro, id_hotel)
+         values (:hotel, :aparthotel, :hospedaje, :campamento, :casa_huespedes, :motel, :villas_cabanas, :Otro, :id_hotel)");
+
+         // bindParam será para asignar los valores referenciados anteriormente
+        $sentenciaTipoAlojamiento->bindParam(':hotel', $checkHotel);
+        $sentenciaTipoAlojamiento->bindParam(':aparthotel', $checkAparthotel);
+        $sentenciaTipoAlojamiento->bindParam(':hospedaje', $checkHospedaje);        
+        $sentenciaTipoAlojamiento->bindParam(':campamento', $checkCampamento);
+        $sentenciaTipoAlojamiento->bindParam(':casa_huespedes', $checkCasaHuespedes);
+        $sentenciaTipoAlojamiento->bindParam(':motel', $checkMotel);
+        $sentenciaTipoAlojamiento->bindParam(':villas_cabanas', $checkVillas_Cabanas);
+        $sentenciaTipoAlojamiento->bindParam(':Otro', $txtOtroAlojamiento);
+        $sentenciaTipoAlojamiento->bindParam(':id_hotel', $hotelId);
+
+        $sentenciaTipoAlojamiento->execute();
 
         // Sentencia para insertar en la tabla de tarifas según el id_hotel al que pertenece
         $sentenciaTarifas = $pdo->prepare("INSERT INTO tarifas_hotel(sencilla, doble, triple, cuadruple, suite, suite_presidencial, id_hotel)
@@ -100,8 +123,8 @@ switch ($accion) {
         $sentenciaTarifas->execute();
 
         // Sentencia para insertar en la tabla de servicios según el hotel al que pertenece
-        $sentenciaServicios = $pdo->prepare("INSERT INTO servicios_hotel(telefono, television, wifi, pos, agua_caliente, aire_acondicionado, cafeteria, ventilador, estacionamiento, lavanderia, Otro, id_hotel)
-         values (:telefono, :television, :wifi, :pos, :agua_caliente, :aire_acondicionado, :cafeteria, :ventilador, :estacionamiento, :lavanderia, :Otro, :id_hotel)");
+        $sentenciaServicios = $pdo->prepare("INSERT INTO servicios_hotel(telefono, television, wifi, pos, agua_caliente, aire_acondicionado, cafeteria, ventilador, estacionamiento, lavanderia, piscina, servicio_habitacion, Otro, id_hotel)
+         values (:telefono, :television, :wifi, :pos, :agua_caliente, :aire_acondicionado, :cafeteria, :ventilador, :estacionamiento, :lavanderia, :piscina, :servicio_habitacion, :Otro, :id_hotel)");
 
          // bindParam será para asignar los valores referenciados anteriormente
         $sentenciaServicios->bindParam(':telefono', $checkTelefono);
@@ -114,6 +137,8 @@ switch ($accion) {
         $sentenciaServicios->bindParam(':ventilador', $checkVentilador);
         $sentenciaServicios->bindParam(':estacionamiento', $checkEstacionamiento);
         $sentenciaServicios->bindParam(':lavanderia', $checkLavanderia);
+        $sentenciaServicios->bindParam(':piscina', $checkPiscina);
+        $sentenciaServicios->bindParam(':servicio_habitacion', $checkServicioHabitacion);
         $sentenciaServicios->bindParam(':Otro', $txtOtro);
         $sentenciaServicios->bindParam(':id_hotel', $hotelId);
 
@@ -169,7 +194,7 @@ switch ($accion) {
     <nav class="navbar navbar-dark">
         <a title="Atrás" href="alojamiento.php"><i class="fas fa-arrow-left text-light" style="font-size: 25px;"></i></a>
         <a title="Inicio" class="mr-auto ml-4" href="../index.php"><i class="fas fa-home text-light" style="font-size: 25px;"></i></a>
-        <img class="mr-auto" src="../img/logo_muni.png" width="50px" alt="">
+        <a class="mr-auto" href="../index.php"><img src="../img/logo_turismo.png" width="50px" alt=""></a>
         <button title="Menú" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -234,7 +259,7 @@ switch ($accion) {
                 </div>
 
                 <div class="col-lg-6">
-                    <label for="">Tipo de alojamiento: </label>
+                    <!-- <label for="">Tipo de alojamiento: </label>
                     <select class="form-control" name="tipoAlojamiento" id="tipoAlojamiento" required>
                         <option value="Hotel">Hotel</option>
                         <option value="Apart.hotel">Apart.hotel</option>
@@ -245,11 +270,48 @@ switch ($accion) {
                         <option value="Motel">Motel</option>
                         <option value="Villas">Villas, Cabañas</option>
                         <option value="Hospedaje">Hospedaje</option>
-                    </select>
+                    </select> -->
                 </div>
             </div>
 
             <br>
+
+
+            <h3>Tipo de Alojamiento</h3>
+            <div class="row ml-3">
+
+                <div class="col-lg-4 ml-3">
+                    <input class="form-check-input" type="checkbox" id="checkHotel" name="checkHotel" value="1">
+                    <label class="form-check-label" for="hotel">Hotel</label><br>
+                    <input class="form-check-input" type="checkbox" id="checkAparthotel" name="checkAparthotel" value="1">
+                    <label class="form-check-label" for="Aparthotel">Aparthotel</label><br>
+                    <input class="form-check-input" type="checkbox" id="checkHospedaje" name="checkHospedaje" value="1">
+                    <label class="form-check-label" for="Hospedaje">Hospedaje</label><br>
+                    <input class="form-check-input" type="checkbox" id="checkCampamento" name="checkCampamento" value="1">
+                    <label class="form-check-label" for="Campamento">Campamento</label><br>                    
+                </div>
+
+
+                <div class="col-lg-4 ml-3">
+                    <input class="form-check-input" type="checkbox" id="checkCasaHuespedes" name="checkCasaHuespedes" value="1">
+                    <label class="form-check-label" for="CasaHuespedes">Casa de huéspedes</label><br>
+                    <input class="form-check-input" type="checkbox" id="checkMotel" name="checkMotel" value="1">
+                    <label class="form-check-label" for="Motel">Motel</label><br>
+                    <input class="form-check-input" type="checkbox" id="checkVillas_Cabanas" name="checkVillas_Cabanas" value="1">
+                    <label class="form-check-label" for="Villas_Cabanas">Villas, Cabañas</label><br>                    
+                </div>
+
+                <div class="col-lg-4 row">
+
+                    <label class="form-check-label mt-4" for="Otro_alojamient">Otro: </label>
+                    <input class="form-control w-75 ml-3 mt-3" type="text" name="txtOtroAlojamiento" value="" placeholder="" id="txtOtroAlojamiento" require=""> <br><br>
+                </div>
+
+            </div>
+            <br>
+            <br>
+
+
             <h4 for="">Tarifas </h4>
             <br>
             <div class="row">
@@ -312,6 +374,8 @@ switch ($accion) {
                     <label class="form-check-label" for="POS">POS</label><br>
                     <input class="form-check-input" type="checkbox" id="checkAguaCaliente" name="checkAguaCaliente" value="1">
                     <label class="form-check-label" for="AguaCaliente">Agua Caliente</label><br>
+                    <input class="form-check-input" type="checkbox" id="checkPiscina" name="checkPiscina" value="1">
+                    <label class="form-check-label" for="Piscina">Piscina</label><br>
                 </div>
 
 
@@ -326,12 +390,14 @@ switch ($accion) {
                     <label class="form-check-label" for="Estacionamiento">Estacionamiento</label><br>
                     <input class="form-check-input" type="checkbox" id="checkLavanderia" name="checkLavanderia" value="1">
                     <label class="form-check-label" for="Lavanderia">Lavandería</label><br>
+                    <input class="form-check-input" type="checkbox" id="checkServicioHabitacion" name="checkServicioHabitacion" value="1">
+                    <label class="form-check-label" for="servicioHabitacion">Servicio a la habitación</label><br>
                 </div>
 
                 <div class="col-lg-4 row">
 
                     <label class="form-check-label mt-4" for="Otro">Otro: </label>
-                    <input class="form-control w-75 ml-3 mt-3" type="text" name="txtOtro" value="" placeholder="" id="txtOtro" require=""> <br><br>
+                    <input class="form-control w-75 ml-3 mt-3" autocapitalize="sentences" type="text" name="txtOtro" value="" placeholder="" id="txtOtro" require=""> <br><br>
                 </div>
 
             </div>
