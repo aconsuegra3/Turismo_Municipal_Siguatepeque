@@ -369,25 +369,25 @@ switch ($accion) {
                 <div class="col-lg-4">
                     <label for="">Sencilla: </label>
                     <?php if ($tarifas['sencilla']) { ?>
-                        <input class="form-control" type="number" min="0" name="txtSencilla" value="<?php echo $tarifas['sencilla'] ?>" placeholder="" id="txtSencilla" require="">
+                        <input class="form-control" type="text" name="txtSencilla" value="<?php echo $tarifas['sencilla'] ?>" placeholder="" id="txtSencilla" require="">
                     <?php } else { ?>
-                        <input class="form-control" type="number" min="0" name="txtSencilla" value="" placeholder="" id="txtSencilla" require="">
+                        <input class="form-control" type="text" name="txtSencilla" value="" placeholder="" id="txtSencilla" require="">
                     <?php } ?>
                 </div>
                 <div class="col-lg-4">
                     <label for="">Doble: </label>
                     <?php if ($tarifas['doble']) { ?>
-                        <input class="form-control" type="number" min="0" name="txtDoble" value="<?php echo $tarifas['doble'] ?>" placeholder="" id="txtDoble" require="">
+                        <input class="form-control" type="text"  name="txtDoble" value="<?php echo $tarifas['doble'] ?>" placeholder="" id="txtDoble" require="">
                     <?php } else { ?>
-                        <input class="form-control" type="number" min="0" name="txtDoble" value="" placeholder="" id="txtDoble" require="">
+                        <input class="form-control" type="text" name="txtDoble" value="" placeholder="" id="txtDoble" require="">
                     <?php } ?>
                 </div>
                 <div class="col-lg-4">
                     <label for="">Triple: </label>
                     <?php if ($tarifas['triple']) { ?>
-                        <input class="form-control" type="number" min="0" name="txtTriple" value="<?php echo $tarifas['triple'] ?>" placeholder="" id="txtTriple" require="">
+                        <input class="form-control" type="text" name="txtTriple" value="<?php echo $tarifas['triple'] ?>" placeholder="" id="txtTriple" require="">
                     <?php } else { ?>
-                        <input class="form-control" type="number" min="0" name="txtTriple" value="" placeholder="" id="txtTriple" require="">
+                        <input class="form-control" type="text" name="txtTriple" value="" placeholder="" id="txtTriple" require="">
                     <?php } ?>
                 </div>
             </div>
@@ -396,25 +396,25 @@ switch ($accion) {
                 <div class="col-lg-4">
                     <label for="">Cuádruple: </label>
                     <?php if ($tarifas['cuadruple']) { ?>
-                        <input class="form-control" type="number" min="0" name="txtCuadruple" value="<?php echo $tarifas['cuadruple'] ?>" placeholder="" id="txtCuadruple" require="">
+                        <input class="form-control" type="text" name="txtCuadruple" value="<?php echo $tarifas['cuadruple'] ?>" placeholder="" id="txtCuadruple" require="">
                     <?php } else { ?>
-                        <input class="form-control" type="number" min="0" name="txtCuadruple" value="" placeholder="" id="txtCuadruple" require="">
+                        <input class="form-control" type="text" name="txtCuadruple" value="" placeholder="" id="txtCuadruple" require="">
                     <?php } ?>
                 </div>
                 <div class="col-lg-4">
                     <label for="">Suite: </label>
                     <?php if ($tarifas['suite']) { ?>
-                        <input class="form-control" type="number" min="0" name="txtSuite" value="<?php echo $tarifas['suite'] ?>" placeholder="" id="txtSuite" require="">
+                        <input class="form-control" type="text" name="txtSuite" value="<?php echo $tarifas['suite'] ?>" placeholder="" id="txtSuite" require="">
                     <?php } else { ?>
-                        <input class="form-control" type="number" min="0" name="txtSuite" value="" placeholder="" id="txtSuite" require="">
+                        <input class="form-control" type="text"  name="txtSuite" value="" placeholder="" id="txtSuite" require="">
                     <?php } ?>
                 </div>
                 <div class="col-lg-4">
                     <label for="">Suite Presidencial: </label>
                     <?php if ($tarifas['suite_presidencial']) { ?>
-                        <input class="form-control" type="number" min="0" name="txtSuitePresidencial" value="<?php echo $tarifas['suite_presidencial'] ?>" placeholder="" id="txtSuitePresidencial" require="">
+                        <input class="form-control" type="text" name="txtSuitePresidencial" value="<?php echo $tarifas['suite_presidencial'] ?>" placeholder="" id="txtSuitePresidencial" require="">
                     <?php } else { ?>
-                        <input class="form-control" type="number" min="0" name="txtSuitePresidencial" value="" placeholder="" id="txtSuitePresidencial" require="">
+                        <input class="form-control" type="text" name="txtSuitePresidencial" value="" placeholder="" id="txtSuitePresidencial" require="">
                     <?php } ?>
                 </div>
 
@@ -553,9 +553,9 @@ switch ($accion) {
                 <div class="col-lg-3">
                     <label for="">Capacidad del salón de eventos: </label>
                     <?php if ($hotel['capacidad_salon_eventos']) { ?>
-                        <input class="form-control" type="number" min="0" name="txtSalonEventos" value="<?php echo $hotel['capacidad_salon_eventos'] ?>" placeholder="" id="txtSalonEventos" require="">
+                        <input class="form-control" type="text" name="txtSalonEventos" value="<?php echo $hotel['capacidad_salon_eventos'] ?>" placeholder="" id="txtSalonEventos" require="">
                     <?php } else { ?>
-                        <input class="form-control" type="number" min="0" name="txtSalonEventos" value="" placeholder="" id="txtSalonEventos" require="">
+                        <input class="form-control" type="text" name="txtSalonEventos" value="" placeholder="" id="txtSalonEventos" require="">
                     <?php } ?>
 
 

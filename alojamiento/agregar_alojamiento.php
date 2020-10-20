@@ -317,30 +317,30 @@ switch ($accion) {
             <div class="row">
                 <div class="col-lg-4">
                     <label for="">Sencilla: </label>
-                    <input class="form-control" max="50000" type="number" min="0" name="txtSencilla" value="" placeholder="" id="txtSencilla" require="">
+                    <input class="form-control" type="text" name="txtSencilla" value="" placeholder="" id="txtSencilla" require="">
                 </div>
                 <div class="col-lg-4">
                     <label for="">Doble: </label>
-                    <input class="form-control" max="50000" type="number" min="0" name="txtDoble" value="" placeholder="" id="txtDoble" require="">
+                    <input class="form-control" type="text" name="txtDoble" value="" placeholder="" id="txtDoble" require="">
                 </div>
                 <div class="col-lg-4">
                     <label for="">Triple: </label>
-                    <input class="form-control" max="50000" type="number" min="0" name="txtTriple" value="" placeholder="" id="txtTriple" require="">
+                    <input class="form-control" type="text" name="txtTriple" value="" placeholder="" id="txtTriple" require="">
                 </div>
             </div>
 
             <div class="row mt-3">
                 <div class="col-lg-4">
                     <label for="">Cuádruple: </label>
-                    <input class="form-control" max="50000" type="number" min="0" name="txtCuadruple" value="" placeholder="" id="txtCuadruple" require="">
+                    <input class="form-control"  type="text" name="txtCuadruple" value="" placeholder="" id="txtCuadruple" require="">
                 </div>
                 <div class="col-lg-4">
                     <label for="">Suite: </label>
-                    <input class="form-control" max="50000" type="number" min="0" name="txtSuite" value="" placeholder="" id="txtSuite" require="">
+                    <input class="form-control" type="text" name="txtSuite" value="" placeholder="" id="txtSuite" require="">
                 </div>
                 <div class="col-lg-4">
                     <label for="">Suite Presidencial: </label>
-                    <input class="form-control" max="50000" type="number" min="0" name="txtSuitePresidencial" value="" placeholder="" id="txtSuitePresidencial" require="">
+                    <input class="form-control" type="text" name="txtSuitePresidencial" value="" placeholder="" id="txtSuitePresidencial" require="">
                 </div>
 
             </div>
@@ -414,7 +414,7 @@ switch ($accion) {
 
                 <div class="col-lg-3">
                     <label for="">Capacidad del salón de eventos: </label>
-                    <input class="form-control" max="5000" type="number" min="0" name="txtSalonEventos" value="" placeholder="" id="txtSalonEventos" require="">
+                    <input class="form-control" type="text" name="txtSalonEventos" value="" placeholder="" id="txtSalonEventos" require="">
 
                 </div>
 

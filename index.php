@@ -28,12 +28,10 @@
         <a class="mr-auto" href="index.php"><img src="img/logo_turismo.png" width="50px" alt=""></a>
         <div class="mr-5 text-light">
             <script type="text/javascript">
-                //<![CDATA[
-                var today = new Date();
-                var m = today.getMonth() + 1;
-                var mes = (m < 10) ? '0' + m : m;
-                document.write('Fecha: ' + today.getDate(), '/' + mes, '/' + today.getYear());
-                //]]> 
+                var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+                var diasSemana = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
+                var f = new Date();
+                document.write(diasSemana[f.getDay()] + ", " + f.getDate() + " de " + meses[f.getMonth()] + " del " + f.getFullYear());
             </script>
         </div>
         <script type="text/javascript">
@@ -65,13 +63,16 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item mx-auto ">
-                    <hr class="my-0" width="400px"> <a class="nav-link text-center" href="index.php"> <i class="fas fa-home mr-1"></i> Inicio</a> <hr class="my-0"> 
+                    <hr class="my-0" width="400px"> <a class="nav-link text-center" href="index.php"> <i class="fas fa-home mr-1"></i> Inicio</a>
+                    <hr class="my-0">
                 </li>
                 <li class="nav-item mx-auto ">
-                    <a class="nav-link text-center" href="alojamiento/alojamiento.php"><i class="fas fa-hotel mr-1"></i> Alojamiento</a><hr class="my-0" width="400px">
+                    <a class="nav-link text-center" href="alojamiento/alojamiento.php"><i class="fas fa-hotel mr-1"></i> Alojamiento</a>
+                    <hr class="my-0" width="400px">
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="nav-link text-center" href="alimentos_y_bebidas/alimentosYBebidas.php"><i class="fas fa-utensils mr-1"></i> Alimentos y bebidas</a><hr class="my-0" width="400px">
+                    <a class="nav-link text-center" href="alimentos_y_bebidas/alimentosYBebidas.php"><i class="fas fa-utensils mr-1"></i> Alimentos y bebidas</a>
+                    <hr class="my-0" width="400px">
                 </li>
             </ul>
         </div>
