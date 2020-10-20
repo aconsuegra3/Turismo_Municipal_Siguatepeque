@@ -190,7 +190,7 @@ if ($eliminar) {
                 <?php if ($tarifas['sencilla'] == 0) { ?>
                     <p class="ml-2 mb-2 text-muted">No disponible</p>
                 <?php } else { ?>
-                    <p class="ml-2 mb-2"> L. <?php echo $tarifas['sencilla'] ?>.00</p>
+                    <p class="ml-2 mb-2"><?php echo $tarifas['sencilla'] ?></p>
                 <?php } ?>
             </div>
             <div class="ml-2 row align-items-center col-lg-4">
@@ -198,7 +198,7 @@ if ($eliminar) {
                 <?php if ($tarifas['doble'] == 0) { ?>
                     <p class="ml-2 mb-2 text-muted">No disponible</p>
                 <?php } else { ?>
-                    <p class="ml-2 mb-2"> L. <?php echo $tarifas['doble'] ?>.00</p>
+                    <p class="ml-2 mb-2"><?php echo $tarifas['doble'] ?></p>
                 <?php } ?>
             </div>
             <div class="ml-2 row align-items-center col-lg-4">
@@ -206,7 +206,7 @@ if ($eliminar) {
                 <?php if ($tarifas['triple'] == 0) { ?>
                     <p class="ml-2 mb-2 text-muted">No disponible</p>
                 <?php } else { ?>
-                    <p class="ml-2 mb-2"> L. <?php echo $tarifas['triple'] ?>.00</p>
+                    <p class="ml-2 mb-2"><?php echo $tarifas['triple'] ?></p>
                 <?php } ?>
             </div>
         </div>
@@ -216,7 +216,7 @@ if ($eliminar) {
                 <?php if ($tarifas['cuadruple'] == 0) { ?>
                     <p class="ml-2 mb-2 text-muted">No disponible</p>
                 <?php } else { ?>
-                    <p class="ml-2 mb-2"> L. <?php echo $tarifas['cuadruple'] ?>.00</p>
+                    <p class="ml-2 mb-2"><?php echo $tarifas['cuadruple'] ?></p>
                 <?php } ?>
             </div>
             <div class="ml-2 row align-items-center col-lg-4">
@@ -224,7 +224,7 @@ if ($eliminar) {
                 <?php if ($tarifas['suite'] == 0) { ?>
                     <p class="ml-2 mb-2 text-muted">No disponible</p>
                 <?php } else { ?>
-                    <p class="ml-2 mb-2"> L. <?php echo $tarifas['suite'] ?>.00</p>
+                    <p class="ml-2 mb-2"><?php echo $tarifas['suite'] ?></p>
                 <?php } ?>
             </div>
             <div class="ml-2 row align-items-center col-lg-4">
@@ -232,7 +232,7 @@ if ($eliminar) {
                 <?php if ($tarifas['suite_presidencial'] == 0) { ?>
                     <p class="ml-2 mb-2 text-muted">No disponible</p>
                 <?php } else { ?>
-                    <p class="ml-2 mb-2"> L. <?php echo $tarifas['suite_presidencial'] ?>.00</p>
+                    <p class="ml-2 mb-2"><?php echo $tarifas['suite_presidencial'] ?></p>
                 <?php } ?>
             </div>
         </div>
