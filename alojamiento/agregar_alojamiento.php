@@ -71,7 +71,7 @@ switch ($accion) {
         $sentencia->bindParam(':telefono', $txtTelefono);
         $sentencia->bindParam(':correo', $txtCorreo);
         $sentencia->bindParam(':pag_web', $txtPaginaWeb);
-        $sentencia->bindParam(':horario', $txtHorario);       
+        $sentencia->bindParam(':horario', $txtHorario);
 
         $sentencia->bindParam(':numero_camas', $txtNumeroCamas);
         $sentencia->bindParam(':numero_habitaciones', $txtNumeroHabitaciones);
@@ -84,20 +84,20 @@ switch ($accion) {
         $sentencia->execute();
 
         // Sentencia de consulta para seleccionar el hotel insertado para poder sacar el id
-        $sentenciaIdHotel = $pdo->prepare("SELECT * FROM hoteles ORDER BY id DESC LIMIT 1");    
-        $sentenciaIdHotel->execute();        
+        $sentenciaIdHotel = $pdo->prepare("SELECT * FROM hoteles ORDER BY id DESC LIMIT 1");
+        $sentenciaIdHotel->execute();
         $hotel = $sentenciaIdHotel->fetch(PDO::FETCH_ASSOC);
 
-        $hotelId = $hotel['id'];       
+        $hotelId = $hotel['id'];
 
         // Sentencia de tipo_alojamiento
         $sentenciaTipoAlojamiento = $pdo->prepare("INSERT INTO tipo_alojamiento(hotel, aparthotel, hospedaje, campamento, casa_huespedes, motel, villas_cabanas, Otro, id_hotel)
          values (:hotel, :aparthotel, :hospedaje, :campamento, :casa_huespedes, :motel, :villas_cabanas, :Otro, :id_hotel)");
 
-         // bindParam será para asignar los valores referenciados anteriormente
+        // bindParam será para asignar los valores referenciados anteriormente
         $sentenciaTipoAlojamiento->bindParam(':hotel', $checkHotel);
         $sentenciaTipoAlojamiento->bindParam(':aparthotel', $checkAparthotel);
-        $sentenciaTipoAlojamiento->bindParam(':hospedaje', $checkHospedaje);        
+        $sentenciaTipoAlojamiento->bindParam(':hospedaje', $checkHospedaje);
         $sentenciaTipoAlojamiento->bindParam(':campamento', $checkCampamento);
         $sentenciaTipoAlojamiento->bindParam(':casa_huespedes', $checkCasaHuespedes);
         $sentenciaTipoAlojamiento->bindParam(':motel', $checkMotel);
@@ -111,7 +111,7 @@ switch ($accion) {
         $sentenciaTarifas = $pdo->prepare("INSERT INTO tarifas_hotel(sencilla, doble, triple, cuadruple, suite, suite_presidencial, id_hotel)
          values (:sencilla, :doble, :triple, :cuadruple, :suite, :suite_presidencial, :id_hotel)");
 
-         // bindParam será para asignar los valores referenciados anteriormente
+        // bindParam será para asignar los valores referenciados anteriormente
         $sentenciaTarifas->bindParam(':sencilla', $txtSencilla);
         $sentenciaTarifas->bindParam(':doble', $txtDoble);
         $sentenciaTarifas->bindParam(':triple', $txtTriple);
@@ -126,7 +126,7 @@ switch ($accion) {
         $sentenciaServicios = $pdo->prepare("INSERT INTO servicios_hotel(telefono, television, wifi, pos, agua_caliente, aire_acondicionado, cafeteria, ventilador, estacionamiento, lavanderia, piscina, servicio_habitacion, Otro, id_hotel)
          values (:telefono, :television, :wifi, :pos, :agua_caliente, :aire_acondicionado, :cafeteria, :ventilador, :estacionamiento, :lavanderia, :piscina, :servicio_habitacion, :Otro, :id_hotel)");
 
-         // bindParam será para asignar los valores referenciados anteriormente
+        // bindParam será para asignar los valores referenciados anteriormente
         $sentenciaServicios->bindParam(':telefono', $checkTelefono);
         $sentenciaServicios->bindParam(':television', $checkTelevision);
         $sentenciaServicios->bindParam(':wifi', $checkWifi);
@@ -147,22 +147,22 @@ switch ($accion) {
         $sentenciaEstanciaHuespedes = $pdo->prepare("INSERT INTO estancia_huespedes_hotel(locales, nacionales, extranjeros, id_hotel)
          values (:locales, :nacionales, :extranjeros, :id_hotel)");
 
-         // bindParam será para asignar los valores referenciados anteriormente
+        // bindParam será para asignar los valores referenciados anteriormente
         $sentenciaEstanciaHuespedes->bindParam(':locales', $checkLocales);
         $sentenciaEstanciaHuespedes->bindParam(':nacionales', $checkNacionales);
-        $sentenciaEstanciaHuespedes->bindParam(':extranjeros', $checkExtranjeros);        
+        $sentenciaEstanciaHuespedes->bindParam(':extranjeros', $checkExtranjeros);
         $sentenciaEstanciaHuespedes->bindParam(':id_hotel', $hotelId);
 
         $sentenciaEstanciaHuespedes->execute();
 
-        if($sentencia && $sentenciaEstanciaHuespedes && $sentenciaServicios && $sentenciaTarifas){
+        if ($sentencia && $sentenciaEstanciaHuespedes && $sentenciaServicios && $sentenciaTarifas) {
             echo '<script language="javascript">alert("Registro agregado exitosamente");window.location.href="alojamiento.php"</script>';
         }
         // // Header sirve para redireccionar a la direccion que se desee
         // header('location: alojamiento.php');
-        
+
         break;
-    case "btnCancelar":                
+    case "btnCancelar":
         break;
 }
 
@@ -173,284 +173,350 @@ switch ($accion) {
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios de Alojamiento</title>
-
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Sistema para registrar los lugares turisticos de Siguatepeque" />
+    <meta name="author" content="Abel Consuegra" />
+    <title>Agregar alojamiento</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <link rel="icon" href="../img/logo_muni.png">
-    <link rel="stylesheet" href="../css/estilos.css">    
-        
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
     <script src="https://kit.fontawesome.com/a018cd853a.js" crossorigin="anonymous"></script>
+    <link href="../css/styles.css" rel="stylesheet" />
+    <link href="../css/estilos.css" rel="stylesheet" />
+    <link rel="icon" href="../img/logo_muni.png">
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="d-flex flex-column h-100 ">
-
-    <nav class="navbar navbar-dark">
-        <a title="Atrás" href="alojamiento.php"><i class="fas fa-arrow-left text-light" style="font-size: 25px;"></i></a>
-        <a title="Inicio" class="mr-auto ml-4" href="../index.php"><i class="fas fa-home text-light" style="font-size: 25px;"></i></a>
-        <a class="mr-auto" href="../index.php"><img src="../img/logo_turismo.png" width="50px" alt=""></a>
-        <button title="Menú" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-#32357b px-2">
+        <button class="btn btn-link btn-sm order-lg-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-                <li class="nav-item mx-auto ">
-                    <a class="nav-link" href="../index.php"> <i class="fas fa-home mr-1"></i> Inicio</a>
-                </li>
-                <li class="nav-item mx-auto ">
-                    <a class="nav-link" href="alojamiento.php"><i class="fas fa-hotel mr-1"></i> Alojamiento</a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href="../alimentos_y_bebidas/alimentosYBebidas.php"><i class="fas fa-utensils mr-1"></i> Alimentos y bebidas</a>
-                </li>
-            </ul>
+        <!-- <a class="ml-2" href="index.php"></a> -->
+        <img class="ml-2" src="../img/logo_turismo.png" width="50px" alt="">
+
+        <!-- <a class="m-auto" href="index.php"><img src="img/logo_muni.png" width="40px" alt=""></a> -->
+        <p class="text-light mt-3 ml-2">Turismo Municipal Siguatepeque</p>
+        <div class="mr-1 ml-auto text-light">
+            <script type="text/javascript">
+                var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+                var diasSemana = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
+                var f = new Date();
+                document.write(diasSemana[f.getDay()] + ", " + f.getDate() + " de " + meses[f.getMonth()] + " del " + f.getFullYear());
+            </script>
         </div>
+
+
     </nav>
-
-    <div class="container mt-3">        
-        <form class="form-group" action="" method="post" enctype="multipart/form-data">
-
-            <h3 class="mt-4 text-center">INGRESO DE EMPRESAS DE SERVICIO DE ALOJAMIENTO</h3>
-            <h4 class="mt-4 mb-4">Información general</h4>            
-
-            <div class="row">
-
-                <div class="col-lg-6">
-                    <label for="">Nombre: </label>
-                    <input class="form-control " maxlength="255" type="text" name="txtNombre" value="" placeholder="" id="txtNombre" require="" required>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav sb-sidenav-dark" id="sidenavAccordion" style="background-color: #181936;">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="mt-3 mx-auto" href="../index.php"><img src="../img/logo_muni.png" width="100px" alt=""></a>
+                        <a class="nav-link mt-3" href="../index.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+                            Inicio
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Servicios</div>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-hotel"></i></div>
+                            Alojamiento
+                            <div class="sb-sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav" style="padding-top: 0px; margin-top: 0px;">
+                                <a class="nav-link" href="alojamiento.php"><i class="fas fa-eye"></i> &nbsp; Ver todos</a>
+                                <a class="nav-link" href="agregar_alojamiento.php"><i class="fas fa-plus"></i> &nbsp; Agregar nuevo</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            Alimentos y bebidas
+                            <div class="sb-sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </a>
+                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages" style="padding-top: 0px; margin-top: 0px;">
+                                <a class="nav-link" href="../alimentos_y_bebidas/alimentosYBebidas.php"><i class="fas fa-eye"></i> &nbsp; Ver todos</a>
+                                <a class="nav-link" href="../alimentos_y_bebidas/agregar.php"><i class="fas fa-plus"></i> &nbsp; Agregar nuevo</a>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
-                <br>
-
-                <div class="col-lg-6">
-                    <label for="">Dirección: </label>
-                    <input class="form-control" maxlength="1000" type="text" name="txtDireccion" value="" placeholder="" id="txtDireccion" require="" required>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-lg-3">
-                    <label for="">Teléfono: </label>
-                    <input class="form-control" maxlength="15" type="text" name="txtTelefono" value="" placeholder="" id="txtTelefono" require="" required>
-                    <br>
-                </div>
-
-                <div class="col-lg-4">
-                    <label for="">Correo electrónico: </label>
-                    <input class="form-control" maxlength="100" type="text" name="txtCorreo" value="" placeholder="" id="txtCorreo" require="">
-                </div>
-                <div class="col-lg-5">
-                    <label for="">Página Web o Facebook: </label>
-                    <input class="form-control" maxlength="1000" type="text" name="txtPaginaWeb" value="" placeholder="" id="txtPaginaWeb" require="">
-                </div>
-            </div>
-            <br>
-
-            <div class="row">
-                <div class="col-lg-6">
-                    <label for="">Horarios de servicio: </label>
-                    <input class="form-control" maxlength="255" type="text" name="txtHorario" value="" placeholder="" id="txtHorario" require="" required>
-                    <br>
-                </div>
-
-                <div class="col-lg-6">
-                    <!-- <label for="">Tipo de alojamiento: </label>
-                    <select class="form-control" name="tipoAlojamiento" id="tipoAlojamiento" required>
-                        <option value="Hotel">Hotel</option>
-                        <option value="Apart.hotel">Apart.hotel</option>
-                        <option value="Tiempo_Compartido">Tiempo Compartido</option>
-                        <option value="Campamento">Campamento</option>
-                        <option value="Albergue">Albergue</option>
-                        <option value="Huespedes">Casa de Huéspedes</option>
-                        <option value="Motel">Motel</option>
-                        <option value="Villas">Villas, Cabañas</option>
-                        <option value="Hospedaje">Hospedaje</option>
-                    </select> -->
-                </div>
-            </div>
-
-            <br>
-
-
-            <h3>Tipo de Alojamiento</h3>
-            <div class="row ml-3">
-
-                <div class="col-lg-4 ml-3">
-                    <input class="form-check-input" type="checkbox" id="checkHotel" name="checkHotel" value="1">
-                    <label class="form-check-label" for="hotel">Hotel</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkAparthotel" name="checkAparthotel" value="1">
-                    <label class="form-check-label" for="Aparthotel">Aparthotel</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkHospedaje" name="checkHospedaje" value="1">
-                    <label class="form-check-label" for="Hospedaje">Hospedaje</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkCampamento" name="checkCampamento" value="1">
-                    <label class="form-check-label" for="Campamento">Campamento</label><br>                    
-                </div>
-
-
-                <div class="col-lg-4 ml-3">
-                    <input class="form-check-input" type="checkbox" id="checkCasaHuespedes" name="checkCasaHuespedes" value="1">
-                    <label class="form-check-label" for="CasaHuespedes">Casa de huéspedes</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkMotel" name="checkMotel" value="1">
-                    <label class="form-check-label" for="Motel">Motel</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkVillas_Cabanas" name="checkVillas_Cabanas" value="1">
-                    <label class="form-check-label" for="Villas_Cabanas">Villas, Cabañas</label><br>                    
-                </div>
-
-                <div class="col-lg-4 row">
-
-                    <label class="form-check-label mt-4" for="Otro_alojamient">Otro: </label>
-                    <input class="form-control w-75 ml-3 mt-3" type="text" name="txtOtroAlojamiento" value="" placeholder="" id="txtOtroAlojamiento" require=""> <br><br>
-                </div>
-
-            </div>
-            <br>
-            <br>
-
-
-            <h4 for="">Tarifas </h4>
-            <br>
-            <div class="row">
-                <div class="col-lg-4">
-                    <label for="">Sencilla: </label>
-                    <input class="form-control" type="text" name="txtSencilla" value="" placeholder="" id="txtSencilla" require="">
-                </div>
-                <div class="col-lg-4">
-                    <label for="">Doble: </label>
-                    <input class="form-control" type="text" name="txtDoble" value="" placeholder="" id="txtDoble" require="">
-                </div>
-                <div class="col-lg-4">
-                    <label for="">Triple: </label>
-                    <input class="form-control" type="text" name="txtTriple" value="" placeholder="" id="txtTriple" require="">
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-lg-4">
-                    <label for="">Cuádruple: </label>
-                    <input class="form-control"  type="text" name="txtCuadruple" value="" placeholder="" id="txtCuadruple" require="">
-                </div>
-                <div class="col-lg-4">
-                    <label for="">Suite: </label>
-                    <input class="form-control" type="text" name="txtSuite" value="" placeholder="" id="txtSuite" require="">
-                </div>
-                <div class="col-lg-4">
-                    <label for="">Suite Presidencial: </label>
-                    <input class="form-control" type="text" name="txtSuitePresidencial" value="" placeholder="" id="txtSuitePresidencial" require="">
-                </div>
-
-            </div>
-            <br>
-
-            <div class="row">
-                <div class="col-lg-6">
-                    <label for="">Numero de camas: </label>
-                    <input class="form-control" max="5000" type="number" min="0" name="txtNumeroCamas" value="" placeholder="" id="txtNumeroCamas" require="">
-                    <br>
-                </div>
-                <div class="col-lg-6">
-                    <label for="">Numero de habitaciones: </label>
-                    <input class="form-control" max="5000" type="number" min="0" name="txtNumeroHabitaciones" value="" placeholder="" id="txtNumeroHabitaciones" require="">
+                <div class="sb-sidenav-footer" style="background-color: #0e0f1f;">
+                    <div class="small">Municipalidad de Siguatepeque</div>
 
                 </div>
-            </div>
-            <br>
-
-            <h3>Servicios</h3>
-            <div class="row ml-3">
-
-                <div class="col-lg-4 ml-3">
-                    <input class="form-check-input" type="checkbox" id="checkTelefono" name="checkTelefono" value="1">
-                    <label class="form-check-label" for="telefono">Teléfono</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkTelevision" name="checkTelevision" value="1">
-                    <label class="form-check-label" for="television">Televisión</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkWifi" name="checkWifi" value="1">
-                    <label class="form-check-label" for="Wifi">Wifi</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkPos" name="checkPos" value="1">
-                    <label class="form-check-label" for="POS">POS</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkAguaCaliente" name="checkAguaCaliente" value="1">
-                    <label class="form-check-label" for="AguaCaliente">Agua Caliente</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkPiscina" name="checkPiscina" value="1">
-                    <label class="form-check-label" for="Piscina">Piscina</label><br>
-                </div>
-
-
-                <div class="col-lg-4 ml-3">
-                    <input class="form-check-input" type="checkbox" id="checkAireAcondicionado" name="checkAireAcondicionado" value="1">
-                    <label class="form-check-label" for="AireAcondicionado">Aire Acondicionado</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkCafeteria" name="checkCafeteria" value="1">
-                    <label class="form-check-label" for="Cafeteria">Cafeteria</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkVentilador" name="checkVentilador" value="1">
-                    <label class="form-check-label" for="Ventilador">Ventilador</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkEstacionamiento" name="checkEstacionamiento" value="1">
-                    <label class="form-check-label" for="Estacionamiento">Estacionamiento</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkLavanderia" name="checkLavanderia" value="1">
-                    <label class="form-check-label" for="Lavanderia">Lavandería</label><br>
-                    <input class="form-check-input" type="checkbox" id="checkServicioHabitacion" name="checkServicioHabitacion" value="1">
-                    <label class="form-check-label" for="servicioHabitacion">Servicio a la habitación</label><br>
-                </div>
-
-                <div class="col-lg-4 row">
-
-                    <label class="form-check-label mt-4" for="Otro">Otro: </label>
-                    <input class="form-control w-75 ml-3 mt-3" autocapitalize="sentences" type="text" name="txtOtro" value="" placeholder="" id="txtOtro" require=""> <br><br>
-                </div>
-
-            </div>
-
-            <br>
-            <div class="row mx-auto mt-2" style="justify-content:center;">
-                <div class="col-lg-3">
-                    <label for="">Servicio de desayuno incluido: </label>
-                    <select class="form-control" name="desayunoIncluido" id="desayunoIncluido" required>
-                        <option value="1">Si</option>
-                        <option value="0">No</option>
-                    </select><br>
-                </div>
-
-                <div class="col-lg-3">
-                    <label for="">Capacidad del salón de eventos: </label>
-                    <input class="form-control" type="text" name="txtSalonEventos" value="" placeholder="" id="txtSalonEventos" require="">
-
-                </div>
-
-            </div>
-            <br>
-            <h3>Estancia de los huéspedes</h3>
-            <div class="row ml-3 text-center mt-3 mb-4">
-                <h5>Procedencia: </h5>
-                <div class="col-lg-3 ml-3">
-                    <input class="form-check-input" type="checkbox" id="checkLocales" name="checkLocales" value="1">
-                    <label class="form-check-label" for="Locales">Locales</label><br>
-                </div>
-                <div class="col-lg-3 ml-3">
-                    <input class="form-check-input" type="checkbox" id="checkNacionales" name="checkNacionales" value="1">
-                    <label class="form-check-label" for="Nacionales">Nacionales</label><br>
-                </div>
-                <div class="col-lg-3 ml-3">
-                    <input class="form-check-input" type="checkbox" id="checkExtranjeros" name="checkExtranjeros" value="1">
-                    <label class="form-check-label" for="Extranjeros">Extranjeros</label><br>
-                </div>
-            </div>            
-
-            <div class="text-center">
-                <button class="btn btn-success" value="btnAgregar" type="submit" name="accion">Agregar</button>
-                <!-- <button class="btn btn-primary" value="btnModificar" type="submit" name="accion">Modificar</button> -->
-                <!-- <button class="btn btn-danger" value="btnEliminar" type="submit" name="accion">Eliminar</button> -->
-                <a href="alojamiento.php" class="btn btn-danger" value="btnCancelar" type="submit" name="accion">Cancelar</a><br>
-            </div>
-        </form>
-    </div>
-
-    <footer class="footer mt-auto py-3 text-center">
-        <div class="container">
-            <span class="text-muted">© Abel Consuegra - 2020</span><br><br>
+            </nav>
         </div>
-    </footer>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container mt-1 pt-3 px-2">
+
+                    <form class="form-group" action="" method="post" enctype="multipart/form-data">
+
+                        <h3 class="mt-4 text-center">INGRESO DE EMPRESAS DE SERVICIO DE ALOJAMIENTO</h3>
+                        <h4 class="mt-4 mb-4">Información general</h4>
+
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <label for="">Nombre: </label>
+                                <input class="form-control " maxlength="255" type="text" name="txtNombre" value="" placeholder="" id="txtNombre" require="" required>
+                            </div>
+                            <br>
+
+                            <div class="col-lg-6">
+                                <label for="">Dirección: </label>
+                                <input class="form-control" maxlength="1000" type="text" name="txtDireccion" value="" placeholder="" id="txtDireccion" require="" required>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label for="">Teléfono: </label>
+                                <input class="form-control" maxlength="15" type="text" name="txtTelefono" value="" placeholder="" id="txtTelefono" require="" required>
+                                <br>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label for="">Correo electrónico: </label>
+                                <input class="form-control" maxlength="100" type="text" name="txtCorreo" value="" placeholder="" id="txtCorreo" require="">
+                            </div>
+                            <div class="col-lg-5">
+                                <label for="">Página Web o Facebook: </label>
+                                <input class="form-control" maxlength="1000" type="text" name="txtPaginaWeb" value="" placeholder="" id="txtPaginaWeb" require="">
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="">Horarios de servicio: </label>
+                                <input class="form-control" maxlength="255" type="text" name="txtHorario" value="" placeholder="" id="txtHorario" require="" required>
+                                <br>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <!-- <label for="">Tipo de alojamiento: </label>
+        <select class="form-control" name="tipoAlojamiento" id="tipoAlojamiento" required>
+            <option value="Hotel">Hotel</option>
+            <option value="Apart.hotel">Apart.hotel</option>
+            <option value="Tiempo_Compartido">Tiempo Compartido</option>
+            <option value="Campamento">Campamento</option>
+            <option value="Albergue">Albergue</option>
+            <option value="Huespedes">Casa de Huéspedes</option>
+            <option value="Motel">Motel</option>
+            <option value="Villas">Villas, Cabañas</option>
+            <option value="Hospedaje">Hospedaje</option>
+        </select> -->
+                            </div>
+                        </div>
+
+                        <br>
+
+
+                        <h3>Tipo de Alojamiento</h3>
+                        <div class="row ml-3">
+
+                            <div class="col-lg-4 ml-3">
+                                <input class="form-check-input" type="checkbox" id="checkHotel" name="checkHotel" value="1">
+                                <label class="form-check-label" for="hotel">Hotel</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkAparthotel" name="checkAparthotel" value="1">
+                                <label class="form-check-label" for="Aparthotel">Aparthotel</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkHospedaje" name="checkHospedaje" value="1">
+                                <label class="form-check-label" for="Hospedaje">Hospedaje</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkCampamento" name="checkCampamento" value="1">
+                                <label class="form-check-label" for="Campamento">Campamento</label><br>
+                            </div>
+
+
+                            <div class="col-lg-4 ml-3">
+                                <input class="form-check-input" type="checkbox" id="checkCasaHuespedes" name="checkCasaHuespedes" value="1">
+                                <label class="form-check-label" for="CasaHuespedes">Casa de huéspedes</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkMotel" name="checkMotel" value="1">
+                                <label class="form-check-label" for="Motel">Motel</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkVillas_Cabanas" name="checkVillas_Cabanas" value="1">
+                                <label class="form-check-label" for="Villas_Cabanas">Villas, Cabañas</label><br>
+                            </div>
+
+                            <div class="col-lg-4 row">
+
+                                <label class="form-check-label mt-4" for="Otro_alojamient">Otro: </label>
+                                <input class="form-control w-75 ml-3 mt-3" type="text" name="txtOtroAlojamiento" value="" placeholder="" id="txtOtroAlojamiento" require=""> <br><br>
+                            </div>
+
+                        </div>
+                        <br>
+                        <br>
+
+
+                        <h4 for="">Tarifas </h4>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="">Sencilla: </label>
+                                <input class="form-control" type="text" name="txtSencilla" value="" placeholder="" id="txtSencilla" require="">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="">Doble: </label>
+                                <input class="form-control" type="text" name="txtDoble" value="" placeholder="" id="txtDoble" require="">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="">Triple: </label>
+                                <input class="form-control" type="text" name="txtTriple" value="" placeholder="" id="txtTriple" require="">
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-lg-4">
+                                <label for="">Cuádruple: </label>
+                                <input class="form-control" type="text" name="txtCuadruple" value="" placeholder="" id="txtCuadruple" require="">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="">Suite: </label>
+                                <input class="form-control" type="text" name="txtSuite" value="" placeholder="" id="txtSuite" require="">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="">Suite Presidencial: </label>
+                                <input class="form-control" type="text" name="txtSuitePresidencial" value="" placeholder="" id="txtSuitePresidencial" require="">
+                            </div>
+
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="">Numero de camas: </label>
+                                <input class="form-control" max="5000" type="number" min="0" name="txtNumeroCamas" value="" placeholder="" id="txtNumeroCamas" require="">
+                                <br>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="">Numero de habitaciones: </label>
+                                <input class="form-control" max="5000" type="number" min="0" name="txtNumeroHabitaciones" value="" placeholder="" id="txtNumeroHabitaciones" require="">
+
+                            </div>
+                        </div>
+                        <br>
+
+                        <h3>Servicios</h3>
+                        <div class="row ml-3">
+
+                            <div class="col-lg-4 ml-3">
+                                <input class="form-check-input" type="checkbox" id="checkTelefono" name="checkTelefono" value="1">
+                                <label class="form-check-label" for="telefono">Teléfono</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkTelevision" name="checkTelevision" value="1">
+                                <label class="form-check-label" for="television">Televisión</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkWifi" name="checkWifi" value="1">
+                                <label class="form-check-label" for="Wifi">Wifi</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkPos" name="checkPos" value="1">
+                                <label class="form-check-label" for="POS">POS</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkAguaCaliente" name="checkAguaCaliente" value="1">
+                                <label class="form-check-label" for="AguaCaliente">Agua Caliente</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkPiscina" name="checkPiscina" value="1">
+                                <label class="form-check-label" for="Piscina">Piscina</label><br>
+                            </div>
+
+
+                            <div class="col-lg-4 ml-3">
+                                <input class="form-check-input" type="checkbox" id="checkAireAcondicionado" name="checkAireAcondicionado" value="1">
+                                <label class="form-check-label" for="AireAcondicionado">Aire Acondicionado</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkCafeteria" name="checkCafeteria" value="1">
+                                <label class="form-check-label" for="Cafeteria">Cafeteria</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkVentilador" name="checkVentilador" value="1">
+                                <label class="form-check-label" for="Ventilador">Ventilador</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkEstacionamiento" name="checkEstacionamiento" value="1">
+                                <label class="form-check-label" for="Estacionamiento">Estacionamiento</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkLavanderia" name="checkLavanderia" value="1">
+                                <label class="form-check-label" for="Lavanderia">Lavandería</label><br>
+                                <input class="form-check-input" type="checkbox" id="checkServicioHabitacion" name="checkServicioHabitacion" value="1">
+                                <label class="form-check-label" for="servicioHabitacion">Servicio a la habitación</label><br>
+                            </div>
+
+                            <div class="col-lg-4 row">
+
+                                <label class="form-check-label mt-4" for="Otro">Otro: </label>
+                                <input class="form-control w-75 ml-3 mt-3" autocapitalize="sentences" type="text" name="txtOtro" value="" placeholder="" id="txtOtro" require=""> <br><br>
+                            </div>
+
+                        </div>
+
+                        <br>
+                        <div class="row mx-auto mt-2" style="justify-content:center;">
+                            <div class="col-lg-3">
+                                <label for="">Servicio de desayuno incluido: </label>
+                                <select class="form-control" name="desayunoIncluido" id="desayunoIncluido" required>
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
+                                </select><br>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <label for="">Capacidad del salón de eventos: </label>
+                                <input class="form-control" type="text" name="txtSalonEventos" value="" placeholder="" id="txtSalonEventos" require="">
+
+                            </div>
+
+                        </div>
+                        <br>
+                        <h3>Estancia de los huéspedes</h3>
+                        <div class="row ml-3 text-center mt-3 mb-4">
+                            <h5>Procedencia: </h5>
+                            <div class="col-lg-3 ml-3">
+                                <input class="form-check-input" type="checkbox" id="checkLocales" name="checkLocales" value="1">
+                                <label class="form-check-label" for="Locales">Locales</label><br>
+                            </div>
+                            <div class="col-lg-3 ml-3">
+                                <input class="form-check-input" type="checkbox" id="checkNacionales" name="checkNacionales" value="1">
+                                <label class="form-check-label" for="Nacionales">Nacionales</label><br>
+                            </div>
+                            <div class="col-lg-3 ml-3">
+                                <input class="form-check-input" type="checkbox" id="checkExtranjeros" name="checkExtranjeros" value="1">
+                                <label class="form-check-label" for="Extranjeros">Extranjeros</label><br>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-success" value="btnAgregar" type="submit" name="accion">Agregar</button>
+                            <!-- <button class="btn btn-primary" value="btnModificar" type="submit" name="accion">Modificar</button> -->
+                            <!-- <button class="btn btn-danger" value="btnEliminar" type="submit" name="accion">Eliminar</button> -->
+                            <a href="alojamiento.php" class="btn btn-danger" value="btnCancelar" type="submit" name="accion">Cancelar</a><br>
+                        </div>
+                    </form>
+                </div>
+
+
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-center small">
+                        <div class="text-muted text-center">Copyright &copy; Abel Consuegra 2020</div>
+
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="../js/scripts.js"></script>
+    <script src="../js/eliminar.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

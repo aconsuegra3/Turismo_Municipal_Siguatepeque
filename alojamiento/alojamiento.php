@@ -83,126 +83,186 @@ $listaHoteles = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Sistema para registrar los lugares turisticos de Siguatepeque" />
+    <meta name="author" content="Abel Consuegra" />
     <title>Servicios de alojamiento</title>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <link rel="icon" href="../img/logo_muni.png">
-    <link rel="stylesheet" href="../css/estilos.css">
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-
     <script src="https://kit.fontawesome.com/a018cd853a.js" crossorigin="anonymous"></script>
+    <link href="../css/styles.css" rel="stylesheet" />
+    <link href="../css/estilos.css" rel="stylesheet" />
+    <link rel="icon" href="../img/logo_muni.png">
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="d-flex flex-column h-100 ">
-
-    <nav class="navbar navbar-dark">
-        <a title="Atrás" href="../index.php"><i class="fas fa-arrow-left text-light" style="font-size: 25px;"></i></a>
-        <a title="Inicio" class="mr-auto ml-4" href="../index.php"><i class="fas fa-home text-light" style="font-size: 25px;"></i></a>
-        <a class="mr-auto" href="../index.php"><img src="../img/logo_turismo.png" width="50px" alt=""></a>
-        <button title="Menú" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-#32357b px-2">
+        <button class="btn btn-link btn-sm order-lg-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-                <li class="nav-item mx-auto ">
-                    <a class="nav-link" href="../index.php"> <i class="fas fa-home mr-1"></i> Inicio</a>
-                </li>
-                <li class="nav-item mx-auto ">
-                    <a class="nav-link" href="#"><i class="fas fa-hotel mr-1"></i> Alojamiento</a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href="../alimentos_y_bebidas/alimentosYBebidas.php"><i class="fas fa-utensils mr-1"></i> Alimentos y bebidas</a>
-                </li>
-            </ul>
+        <!-- <a class="ml-2" href="index.php"></a> -->
+        <img class="ml-2" src="../img/logo_turismo.png" width="50px" alt="">
+
+        <!-- <a class="m-auto" href="index.php"><img src="img/logo_muni.png" width="40px" alt=""></a> -->
+        <p class="text-light mt-3 ml-2">Turismo Municipal Siguatepeque</p>
+        <div class="mr-1 ml-auto text-light">
+            <script type="text/javascript">
+                var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+                var diasSemana = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
+                var f = new Date();
+                document.write(diasSemana[f.getDay()] + ", " + f.getDate() + " de " + meses[f.getMonth()] + " del " + f.getFullYear());
+            </script>
         </div>
+
+
     </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav sb-sidenav-dark" id="sidenavAccordion" style="background-color: #181936;">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="mt-3 mx-auto" href="../index.php"><img src="../img/logo_muni.png" width="100px" alt=""></a>
+                        <a class="nav-link mt-3" href="../index.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+                            Inicio
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Servicios</div>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-hotel"></i></div>
+                            Alojamiento
+                            <div class="sb-sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav" style="padding-top: 0px; margin-top: 0px;">
+                                <a class="nav-link" href="alojamiento.php"><i class="fas fa-eye"></i> &nbsp; Ver todos</a>
+                                <a class="nav-link" href="agregar_alojamiento.php"><i class="fas fa-plus"></i> &nbsp; Agregar nuevo</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            Alimentos y bebidas
+                            <div class="sb-sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </a>
+                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages" style="padding-top: 0px; margin-top: 0px;">
+                                <a class="nav-link" href="../alimentos_y_bebidas/alimentosYBebidas.php"><i class="fas fa-eye"></i> &nbsp; Ver todos</a>
+                                <a class="nav-link" href="../alimentos_y_bebidas/agregar.php"><i class="fas fa-plus"></i> &nbsp; Agregar nuevo</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer" style="background-color: #0e0f1f;">
+                    <div class="small">Municipalidad de Siguatepeque</div>
 
-    <div class="container mt-3 pt-1">
-
-        <h3 class="text-center mt-4 mb-3">Servicios de alojamiento en Siguatepeque</h3>
-
-        <a class="btn btn-success" href="agregar_alojamiento.php"><i class="fas fa-plus"></i> Agregar nuevo</a>
-
-        <div class="row mt-3 ">
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th class="text-center">No.</th>
-                        <th class="text-center">Nombre</th>
-                        <th class="text-center">Dirección</th>
-                        <th class="text-center">Telefono</th>
-                        <th class="text-center">Acciones</th>
-                    </tr>
-                </thead>
-                <?php foreach ($listaHoteles as $hotel) { ?>
-                    <?php
-                    $c = $c + 1;
-                    if ($hotel['activo']) { ?>
-                        <tr>
-                            <td class="text-center align-middle"><?php echo $c; ?></td>
-                            <td class="text-center align-middle"> <a class="text-decoration-none text-dark" title="Ver información" href="hotel.php?id=<?php echo $hotel['id']; ?>"><?php echo $hotel['nombre']; ?></a></td>
-                            <td style="width: 35%;" class="text-center align-middle"><?php echo $hotel['direccion']; ?></td>
-                            <td style="width: 24%;" class="text-center align-middle"><?php echo $hotel['telefono']; ?></td>
-                            <td style="width: 20%;" class="text-center align-middle">
-
-                                <form action="" method="post">
-                                    <input type="hidden" name="txtId" value="<?php echo $hotel['id']; ?>">
-                                    <input type="hidden" name="txtNombre" value="<?php echo $hotel['nombre']; ?>">
-                                    <input type="hidden" name="txtDireccion" value="<?php echo $hotel['direccion']; ?>">
-                                    <input type="hidden" name="txtTelefono" value="<?php echo $hotel['telefono']; ?>">
-
-                                    <a style="font-size: 13px;" class="btn btn-primary text-center m-1" title="Ver información" href="hotel.php?id=<?php echo $hotel['id']; ?>"><i class="fas fa-eye"></i></a>
-                                    <a style="font-size: 13px;" class="btn btn-success text-center m-1" title="Editar" href="actualizar_alojamiento.php?id=<?php echo $hotel['id']; ?>"><i class="fas fa-edit"></i></a>
-                                    <a href='#' style="font-size: 13px;" class="btn btn-danger m-1" title="Eliminar permanentemente" onclick="preguntar(<?php echo $hotel['id'] ?>)"><i class="fas fa-trash-alt"></i></a>
-                                    <button style="font-size: 13px;" class="btn btn-dark m-1" value="btnEstado" title="Deshabilitar" type="submit" name="accion"><i class="fas fa-minus-circle"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php } else { ?>
-                        <tr>
-                            <td class="text-muted text-center"><?php echo $c; ?></td>
-                            <td class="text-muted text-center"><?php echo $hotel['nombre']; ?> (deshabilitado)</td>
-                            <td class="text-muted text-center"><?php echo $hotel['direccion']; ?></td>
-                            <td class="text-muted text-center"><?php echo $hotel['telefono']; ?></td>
-                            <td class="text-center">
-
-                                <form action="" method="post">
-                                    <input type="hidden" name="txtId" value="<?php echo $hotel['id']; ?>">
-                                    <input type="hidden" name="txtNombre" value="<?php echo $hotel['nombre']; ?>">
-                                    <input type="hidden" name="txtDireccion" value="<?php echo $hotel['direccion']; ?>">
-                                    <input type="hidden" name="txtTelefono" value="<?php echo $hotel['telefono']; ?>">
-
-                                    <a style="font-size: 13px;" href='#' type="submit" title="Eliminar permanentemente" class="btn btn-danger" onclick="preguntar(<?php echo $hotel['id'] ?>)"><i class="fas fa-trash-alt"></i></a>
-                                    <button style="font-size: 13px;" class="btn btn-dark" title="Habilitar" value="btnEstado" type="submit" name="accion"><i class="fas fa-plus-circle"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php } ?>
-
-                <?php } ?>
-            </table>
+                </div>
+            </nav>
         </div>
-    </div>    
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container mt-1 pt-3 px-2">
+
+                    <h3 class="text-center mt-4 mb-3">Servicios de alojamiento en Siguatepeque</h3>
+
+                    <a class="btn btn-success" href="agregar_alojamiento.php"><i class="fas fa-plus"></i> Agregar nuevo</a>
+
+                    <div class="row mt-3 ">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center">No.</th>
+                                    <th class="text-center">Nombre</th>
+                                    <th class="text-center">Dirección</th>
+                                    <th class="text-center">Telefono</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <?php foreach ($listaHoteles as $hotel) { ?>
+                                <?php
+                                $c = $c + 1;
+                                if ($hotel['activo']) { ?>
+                                    <tr>
+                                        <td class="text-center align-middle"><?php echo $c; ?></td>
+                                        <td class="text-center align-middle"> <a class="text-decoration-none text-dark" title="Ver información" href="hotel.php?id=<?php echo $hotel['id']; ?>"><?php echo $hotel['nombre']; ?></a></td>
+                                        <td style="width: 35%;" class="text-center align-middle"><?php echo $hotel['direccion']; ?></td>
+                                        <td style="width: 24%;" class="text-center align-middle"><?php echo $hotel['telefono']; ?></td>
+                                        <td style="width: 20%;" class="text-center align-middle">
+
+                                            <form action="" method="post">
+                                                <input type="hidden" name="txtId" value="<?php echo $hotel['id']; ?>">
+                                                <input type="hidden" name="txtNombre" value="<?php echo $hotel['nombre']; ?>">
+                                                <input type="hidden" name="txtDireccion" value="<?php echo $hotel['direccion']; ?>">
+                                                <input type="hidden" name="txtTelefono" value="<?php echo $hotel['telefono']; ?>">
+
+                                                <a style="font-size: 13px;" class="btn btn-primary text-center m-1" title="Ver información" href="hotel.php?id=<?php echo $hotel['id']; ?>"><i class="fas fa-eye"></i></a>
+                                                <a style="font-size: 13px;" class="btn btn-success text-center m-1" title="Editar" href="actualizar_alojamiento.php?id=<?php echo $hotel['id']; ?>"><i class="fas fa-edit"></i></a>
+                                                <a href='#' style="font-size: 13px;" class="btn btn-danger m-1" title="Eliminar permanentemente" onclick="preguntar(<?php echo $hotel['id'] ?>)"><i class="fas fa-trash-alt"></i></a>
+                                                <button style="font-size: 13px;" class="btn btn-dark m-1" value="btnEstado" title="Deshabilitar" type="submit" name="accion"><i class="fas fa-minus-circle"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php } else { ?>
+                                    <tr>
+                                        <td class="text-muted text-center"><?php echo $c; ?></td>
+                                        <td class="text-muted text-center"><?php echo $hotel['nombre']; ?> (deshabilitado)</td>
+                                        <td class="text-muted text-center"><?php echo $hotel['direccion']; ?></td>
+                                        <td class="text-muted text-center"><?php echo $hotel['telefono']; ?></td>
+                                        <td class="text-center">
+
+                                            <form action="" method="post">
+                                                <input type="hidden" name="txtId" value="<?php echo $hotel['id']; ?>">
+                                                <input type="hidden" name="txtNombre" value="<?php echo $hotel['nombre']; ?>">
+                                                <input type="hidden" name="txtDireccion" value="<?php echo $hotel['direccion']; ?>">
+                                                <input type="hidden" name="txtTelefono" value="<?php echo $hotel['telefono']; ?>">
+
+                                                <a style="font-size: 13px;" href='#' type="submit" title="Eliminar permanentemente" class="btn btn-danger" onclick="preguntar(<?php echo $hotel['id'] ?>)"><i class="fas fa-trash-alt"></i></a>
+                                                <button style="font-size: 13px;" class="btn btn-dark" title="Habilitar" value="btnEstado" type="submit" name="accion"><i class="fas fa-plus-circle"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+
+                            <?php } ?>
+                        </table>
+                    </div>
+                </div>
 
 
-    <footer class="footer mt-auto py-3 text-center">
-        <div class="container">
-            <hr>
-            <span class="text-muted">© Abel Consuegra - 2020</span><br><br>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-center small">
+                        <div class="text-muted text-center">Copyright &copy; Abel Consuegra 2020</div>
+
+                    </div>
+                </div>
+            </footer>
         </div>
-    </footer>
-
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="../js/scripts.js"></script>
     <script src="../js/eliminar.js" type="text/javascript"></script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    
 </body>
 
 </html>
+
+
+
