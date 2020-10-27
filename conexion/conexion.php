@@ -8,7 +8,7 @@ $password="";
 try { 
     // Si no hay ningún error, se creará la instancia de SQL usando PDO
     $pdo = new PDO($servidor, $usuario, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET NAMES utf8"));
-    echo "Conectado a la BD...";
+    // echo "Conectado a la BD...";
     
 } catch (PDOException $e) {
     // Si existe un error, lo imprimirá

@@ -201,16 +201,15 @@ switch ($accion) {
     <title>Actualizar alojamiento</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <link rel="icon" href="../img/logo_muni.png">
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <!-- <link rel="icon" href="../img/logo_muni.png"> -->
+    
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
     <script src="https://kit.fontawesome.com/a018cd853a.js" crossorigin="anonymous"></script>
     <link href="../css/styles.css" rel="stylesheet" />
     <link href="../css/estilos.css" rel="stylesheet" />
-    <link rel="icon" href="../img/logo_muni.png">
+    <link rel="icon" href="../img/logo_turismo.png">
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
 </head>
@@ -225,7 +224,7 @@ switch ($accion) {
 
         <!-- <a class="m-auto" href="index.php"><img src="img/logo_muni.png" width="40px" alt=""></a> -->
         <p class="text-light mt-3 ml-2">Turismo Municipal Siguatepeque</p>
-        <div class="mr-1 ml-auto text-light">
+        <div class="fecha mr-1 ml-auto text-light">
             <script type="text/javascript">
                 var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
                 var diasSemana = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
@@ -275,6 +274,10 @@ switch ($accion) {
                                 <a class="nav-link" href="../alimentos_y_bebidas/agregar.php"><i class="fas fa-plus"></i> &nbsp; Agregar nuevo</a>
                             </nav>
                         </div>
+                        <a class="nav-link" href="../assets/manual_de_usuario.pdf" target="_blank">
+                            <div class="sb-nav-link-icon"><i class="fas fa-question-circle"></i></div>
+                            Ayuda
+                        </a>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer" style="background-color: #0e0f1f;">
