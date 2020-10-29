@@ -292,7 +292,7 @@ switch ($accion) {
 
                     <form class="form-group" action="" method="post" enctype="multipart/form-data">
 
-                        <h3 class="mt-4 text-center">INGRESO DE EMPRESAS DE SERVICIO DE ALOJAMIENTO</h3>
+                        <h3 class="mt-4 text-center text-uppercase">ACTUALIZAR INFORMACIÓN DE <?php echo $hotel['nombre'] ?> </h3>
                         <h4 class="mt-4 mb-4">Información general</h4>
 
                         <div class="row">

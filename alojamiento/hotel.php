@@ -222,7 +222,11 @@ if ($eliminar) {
                         <div class="ml-2 row align-items-center col-lg-4">
                             <h6>Página Web / Facebook: </h6>
                             <?php if ($hotel['pag_web']) { ?>
-                                <a class="ml-2 mb-2" title="Ir al sitio web" target="_blank" href="http://<?php echo $hotel['pag_web'] ?>"> <?php echo $hotel['pag_web'] ?></a>
+                                <?php if (strpos($hotel['pag_web'], '.')) { ?>
+                                 <a class="ml-2 mb-2" title="Ir al sitio web" target="_blank" href="http://<?php echo $hotel['pag_web'] ?>"> <?php echo $hotel['pag_web'] ?></a>
+                            <?php } else { ?>
+                                <p class="ml-2 mb-2"> <?php echo $hotel['pag_web'] ?></p>
+                                <?php } ?>                                                               
                             <?php } else { ?>
                                 <p class="ml-2 mb-2 text-muted">No disponible</p>
                             <?php } ?>
@@ -383,6 +387,7 @@ if ($eliminar) {
                         <a class="btn btn-primary" href="actualizar_alojamiento.php?id=<?php echo $hotel['id']; ?>">Modificar</a>
                         <!-- <button class="btn btn-primary" value="btnModificar" type="submit" name="accion">Modificar</button> -->
                         <!-- <a href='#' title="Eliminar permanentemente" class="btn btn-danger" onclick="preguntar(<?php echo $hotel['id'] ?>)">Eliminar</a> -->
+                        <a class="btn btn-danger" href="alojamiento.php">Cancelar</a>
                     </div>
                 </div>
 
