@@ -48,3 +48,8 @@ input{
     font-size: 1.2rem;
   }
 }
+
+#btnBuscar:focus{
+  outline: none;
+  box-shadow: none;
+}

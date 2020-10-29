@@ -178,12 +178,18 @@ $listaAlimentos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             <main>
                 <div class="container mt-1 pt-3 px-2">
 
-                    <h3 class="text-center mt-4 mb-3">Servicios de alimentos y bebidas en Siguatepeque</h3>
+                    <h3 class="text-center mt-4 mb-3">Servicios de alimentos y bebidas en Siguatepeque</h3>                    
 
-                    <a class="btn btn-success" href="agregar.php"><i class="fas fa-plus"></i> Agregar nuevo</a>
+                    <div class="row ">
+                        <a class="btn btn-success ml-2" href="agregar.php"><i class="fas fa-plus"></i> Agregar nuevo</a>
+                        <div class="row align-items-center ml-auto mr-2" style="display: flex; justify-content: flex-end;">
+                            <input data-table="order-table" id="buscar" class="form-control form-control-sm mr-1 w-75 light-table-filter" type="text" placeholder="Buscar" aria-label="Search">
+                            <button id="btnBuscar" class="btn"><i class="fas fa-search" aria-hidden="true"></i></button>
+                        </div>
 
+                    </div>
                     <div class="row mt-3 ">
-                        <table class="table">
+                        <table class="table order-table">
                             <thead class="thead-dark">
                                 <tr>
                                     <th class="text-center">No.</th>
@@ -259,6 +265,7 @@ $listaAlimentos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="../js/scripts.js"></script>
     <script src="../js/eliminar.js" type="text/javascript"></script>
+    <script src="../js/buscar.js" type="text/javascript"></script>
     <script src="../js/eliminar_alimentos.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
